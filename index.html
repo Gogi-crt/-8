@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <title>Проверка пропуска — Бюро научных приключений</title>
+
+    <style>
+        body {
+            margin: 0;
+            background: #e9e6dc;
+            font-family: Arial, sans-serif;
+            color: #102319;
+        }
+
+        .wrap {
+            max-width: 560px;
+            margin: 40px auto;
+            padding: 18px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 12px 40px #0002;
+            overflow: hidden;
+        }
+
+        .head {
+            background: #102319;
+            color: #fff;
+            padding: 28px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 42px;
+        }
+
+        h1 {
+            font-size: 21px;
+            margin: 8px 0;
+        }
+
+        .sub {
+            color: #a8c957;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        .body {
+            padding: 28px;
+        }
+
+        .status {
+            background: #e5f1df;
+            border: 1px solid #a8c957;
+            border-radius: 14px;
+            padding: 18px;
+            text-align: center;
+            color: #245b2d;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #ddd;
+            padding: 13px 0;
+            gap: 15px;
+        }
+
+        .label {
+            color: #777;
+            font-size: 13px;
+        }
+
+        .value {
+            font-weight: bold;
+            text-align: right;
+        }
+
+        .note {
+            margin-top: 22px;
+            background: #f4f1e8;
+            border-radius: 12px;
+            padding: 15px;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .footer {
+            text-align: center;
+            color: #6b756a;
+            font-size: 12px;
+            padding: 18px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="wrap">
+    <div class="card">
+
+        <div class="head">
+            <div class="logo">◈</div>
+
+            <h1>
+                БЮРО НАУЧНЫХ ПРИКЛЮЧЕНИЙ
+            </h1>
+
+            <div class="sub">
+                МОЛОДЁЖНЫЙ ЦЕНТР ПОЛЕВЫХ ИССЛЕДОВАНИЙ
+            </div>
+        </div>
+
+        <div class="body">
+
+            <div id="status" class="status">
+                ✓ ПРОПУСК ДЕЙСТВИТЕЛЕН
+            </div>
+
+            <div id="details"></div>
+
+            <div class="note">
+                Пропуск предназначен для идентификации
+                уполномоченного проверяющего.
+                Имя намеренно не указывается — пропуск может
+                быть выдан ответственному лицу непосредственно
+                перед мероприятием.
+            </div>
+
+        </div>
+
+        <div class="footer">
+            Наука — это приключение ·
+            Бюро научных приключений
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+    // ID действующих пропусков
+    const validIds = [
+        "BNA-CHK-001",
+        "BNA-CHK-002",
+        "BNA-CHK-003",
+        "BNA-CHK-004",
+        "BNA-CHK-005"
+    ];
+
+    // Получаем ID из адреса страницы
+    // Например:
+    // https://ваш-сайт.ru/verify/BNA-CHK-001
+
+    const parts = location.pathname
+        .split("/")
+        .filter(Boolean);
+
+    const id =
+        parts[parts.length - 1] ||
+        new URLSearchParams(location.search).get("id") ||
+        "BNA-CHK-001";
+
+    // Проверяем ID
+    const valid = validIds.includes(id);
+
+    // Выводим информацию
+    document.getElementById("details").innerHTML =
+
+    '<div class="row">' +
+    '<span class="label">ID пропуска</span>' +
+    '<span class="value">' + id + '</span>' +
+    '</div>' +
+
+    '<div class="row">' +
+    '<span class="label">Категория</span>' +
+    '<span class="value">Проверяющий</span>' +
+    '</div>' +
+
+    '<div class="row">' +
+    '<span class="label">Организация</span>' +
+    '<span class="value">Бюро научных приключений</span>' +
+    '</div>' +
+
+    '<div class="row">' +
+    '<span class="label">Статус</span>' +
+    '<span class="value">' +
+    (valid ? "Действителен" : "Не найден") +
+    '</span>' +
+    '</div>';
+
+    // Если пропуск не найден
+    if (!valid) {
+
+        document.getElementById("status").textContent =
+            "✕ ПРОПУСК НЕ НАЙДЕН";
+
+    }
+
+</script>
+
+</body>
+</html>
